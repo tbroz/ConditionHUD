@@ -8,8 +8,31 @@ namespace ConditionHUD
         private GUIStyle shadowStyle;
         private float nextPoll;
 
+        // configurations
+        private bool showConditionOnly;
+        private int fontSize;
+        private float fontOpacity;
+
+        private bool ShowHUD
+        {
+            get => Plugin.ShowHUD.Value;
+            set => Plugin.ShowHUD.Value = value;
+        }
+
+        public void Awake()
+        {
+            showConditionOnly = Plugin.ShowConditionOnly.Value;
+            fontSize = Plugin.FontSize.Value;
+            fontOpacity = Plugin.FontOpacity.Value;
+        }
+  
         public void Update()
         {
+            if (Input.GetKeyDown(Plugin.ToggleKey.Value))
+            {
+                ShowHUD = !ShowHUD;
+            }
+
             if (Time.unscaledTime < nextPoll) return;
             nextPoll = Time.unscaledTime + 0.1f;   
             InventoryHelpers.PollHeld();
@@ -17,7 +40,7 @@ namespace ConditionHUD
 
         public void OnGUI()
         {
-
+            if (!ShowHUD) return; 
             if (Plugin.currentHeldItem == null) return;
 
             var info = Plugin.currentHeldItem.GetInfo();
@@ -32,9 +55,9 @@ namespace ConditionHUD
             {
                 labelStyle = new GUIStyle(GUI.skin.label)
                 {
-                    fontSize = 22,
                     fontStyle = FontStyle.Bold,
-                    alignment = TextAnchor.LowerRight
+                    alignment = TextAnchor.LowerLeft,
+                    wordWrap = true
                 };
                 labelStyle.normal.textColor = Color.white;
 
@@ -42,15 +65,25 @@ namespace ConditionHUD
                 shadowStyle.normal.textColor = Color.black;
             }
 
-            string displayMessage = $"{name} [{condition}]";
+            labelStyle.fontSize = fontSize;
+            labelStyle.normal.textColor = new Color(1f, 1f, 1f, fontOpacity);
 
-            float width = 400f;
-            float height = 50f;
+            shadowStyle.fontSize = fontSize;
+            shadowStyle.normal.textColor = new Color(0f, 0f, 0f, fontOpacity);
+
+            string displayMessage = showConditionOnly ? $"({condition})" : $"{name} ({condition})";
+
             float marginX = 30f;
             float MarginY = 30f;
+            float maxWidth = 600f;
+
+            GUIContent content = new GUIContent(displayMessage);
+            float width = Mathf.Min(labelStyle.CalcSize(content).x + 10f, maxWidth);
+
+            float height = labelStyle.CalcHeight(content, width);
 
             Rect position = new Rect(
-                Screen.width - width - marginX,
+                marginX, 
                 Screen.height - height - MarginY,
                 width,
                 height

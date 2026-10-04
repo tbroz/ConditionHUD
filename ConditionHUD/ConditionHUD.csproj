@@ -45,6 +45,10 @@
 		<Reference Include="Il2Cppmscorlib">
 			<HintPath>$(GameDir)\BepInEx\interop\Il2Cppmscorlib.dll</HintPath>
 			<Private>false</Private>
-		</Reference>	
+		</Reference>
+		<Reference Include="UnityEngine.InputLegacyModule">
+			<HintPath>$(GameDir)\BepInEx\interop\UnityEngine.InputLegacyModule.dll</HintPath>
+			<Private>false</Private>
+		</Reference>
 	</ItemGroup>
 </Project>

@@ -15,18 +15,18 @@ namespace ConditionHUD
         /// <summary>
         /// the transform that holds carried items 
         /// </summary>
-        public static Transform HandSocket;
+        public static Transform inventoryParent;
 
         /// <summary>
-        /// 
+        /// Finds the actively held item
         /// </summary>
         public static InteractionObjectPickup FindActiveHeld(InteractionObjectPickup exclude = null)
         {
-            if (HandSocket == null) return null;
+            if (inventoryParent == null) return null;
 
-            for (int i = 0; i < HandSocket.childCount; i++)
+            for (int i = 0; i < inventoryParent.childCount; i++)
             {
-                Transform child = HandSocket.GetChild(i);
+                Transform child = inventoryParent.GetChild(i);
                 if (child == null || !child.gameObject.activeInHierarchy) continue;
 
                 var pickup = child.GetComponent<InteractionObjectPickup>();
@@ -73,7 +73,7 @@ namespace ConditionHUD
                 return;
             }
 
-            HandSocket = handParent;
+            inventoryParent = handParent;
 
             for (int i = 0; i < handParent.childCount; i++)
             {
