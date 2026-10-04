@@ -17,25 +17,25 @@ _(this should be inside your game folder in C:\Program Files (x86)\Steam\steamap
       - ConditionHUD/
         - ConditionHUD.dll
 
-#### FEATURES
+### FEATURES
 
-###### Configure Font Size
+#### Configure Font Size
 
 ![Text Size](./images/Text-Size.jpg)
 
-###### Configure Font Opacity
+#### Configure Font Opacity
 
 ![Text Opacity](./images/Text-Opacity.jpg)
 
-###### Configure "Show Condition Only" Option
+#### Configure "Show Condition Only" Option
 
 ![Condition Only Option](./images/Condition-Only-Option.jpg)
 
-###### HotKey For Showing / Hiding HUD
+#### HotKey For Showing / Hiding HUD
 
 You have the ability to toggle the HUD on and off with a changable hotkey. The default is F8, however this can be updated inside the Config File
 
-#### Settings/Config File
+### Settings/Config File
 
 You can change the configurations mentioned above in the path below:
 
