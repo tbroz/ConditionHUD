@@ -14,7 +14,7 @@
 			<HintPath>$(GameDir)\BepInEx\core\BepInEx.Core.dll</HintPath>
 			<Private>false</Private>
 		</Reference>
-		<Reference Include="DepInEx.Unity.IL2CPP">
+		<Reference Include="BepInEx.Unity.IL2CPP">
 			<HintPath>$(GameDir)\BepInEx\core\BepInEx.Unity.IL2CPP.dll</HintPath>
 			<Private>false</Private>
 		</Reference>
@@ -32,6 +32,14 @@
 		</Reference>
 		<Reference Include="UnityEngine.CoreModule">
 			<HintPath>$(GameDir)\BepInEx\interop\UnityEngine.CoreModule.dll</HintPath>
+			<Private>false</Private>
+		</Reference>
+		<Reference Include="UnityEngine.IMGUIModule">
+			<HintPath>$(GameDir)\BepInEx\interop\UnityEngine.IMGUIModule.dll</HintPath>
+			<Private>false</Private>
+		</Reference>
+		<Reference Include="UnityEngine.TextRenderingModule">
+			<HintPath>$(GameDir)\BepInEx\interop\UnityEngine.TextRenderingModule.dll</HintPath>
 			<Private>false</Private>
 		</Reference>
 		<Reference Include="Il2Cppmscorlib">
