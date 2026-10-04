@@ -6,6 +6,14 @@ namespace ConditionHUD
     {
         private GUIStyle labelStyle;
         private GUIStyle shadowStyle;
+        private float nextPoll;
+
+        public void Update()
+        {
+            if (Time.unscaledTime < nextPoll) return;
+            nextPoll = Time.unscaledTime + 0.1f;   
+            InventoryHelpers.PollHeld();
+        }
 
         public void OnGUI()
         {
