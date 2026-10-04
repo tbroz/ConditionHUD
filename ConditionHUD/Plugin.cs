@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace ConditionHUD
 {
-    [BepInPlugin("tbroz.ros.conditionhud", "Condition HUD", "0.1.0")]
+    [BepInPlugin("tbroz.ros.conditionhud", "Condition HUD", "1.0.0")]
     public class Plugin : BasePlugin
     {
         public static ManualLogSource Logger;
@@ -34,14 +34,16 @@ namespace ConditionHUD
 
             FontSize = Config.Bind("General", "FontSize", 22,
                 new ConfigDescription("Text size in pixels. Please be aware of clipping the larger you go.", 
-                    new AcceptableValueRange<int>(10, 50)));
+                    new AcceptableValueRange<int>(10, 60)));
 
             FontOpacity = Config.Bind("General", "FontOpacity", 100,
                 new ConfigDescription("Text opacity. 0 (invisible) to 100 (solid). The lowest you can set your opacity is 10.", 
                 new AcceptableValueRange<int>(10, 100)));
 
             new Harmony("tbroz.ros.conditionhud").PatchAll();
+            #if DEBUG
             Logger.LogInfo("Condition HUD Loaded");
+            #endif
 
             AddComponent<ConditionHUDComponent>();
 

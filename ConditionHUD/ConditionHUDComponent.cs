@@ -23,9 +23,9 @@ namespace ConditionHUD
         {
             showConditionOnly = Plugin.ShowConditionOnly.Value;
             fontSize = Plugin.FontSize.Value;
-            fontOpacity = Plugin.FontOpacity.Value;
+            fontOpacity = Plugin.FontOpacity.Value / 100f;
         }
-  
+
         public void Update()
         {
             if (Input.GetKeyDown(Plugin.ToggleKey.Value))
@@ -40,6 +40,11 @@ namespace ConditionHUD
 
         public void OnGUI()
         {
+            if (labelStyle == null)
+            {
+                InitStyles();
+            }
+
             if (!ShowHUD) return; 
             if (Plugin.currentHeldItem == null) return;
 
@@ -51,35 +56,14 @@ namespace ConditionHUD
 
             if (string.IsNullOrEmpty(name) && string.IsNullOrEmpty(condition)) return;
 
-            if (labelStyle == null)
-            {
-                labelStyle = new GUIStyle(GUI.skin.label)
-                {
-                    fontStyle = FontStyle.Bold,
-                    alignment = TextAnchor.LowerLeft,
-                    wordWrap = true
-                };
-                labelStyle.normal.textColor = Color.white;
-
-                shadowStyle = new GUIStyle(labelStyle);
-                shadowStyle.normal.textColor = Color.black;
-            }
-
-            labelStyle.fontSize = fontSize;
-            labelStyle.normal.textColor = new Color(1f, 1f, 1f, fontOpacity);
-
-            shadowStyle.fontSize = fontSize;
-            shadowStyle.normal.textColor = new Color(0f, 0f, 0f, fontOpacity);
-
             string displayMessage = showConditionOnly ? $"({condition})" : $"{name} ({condition})";
 
             float marginX = 30f;
             float MarginY = 30f;
-            float maxWidth = 600f;
+            float maxWidth = 700f;
 
             GUIContent content = new GUIContent(displayMessage);
             float width = Mathf.Min(labelStyle.CalcSize(content).x + 10f, maxWidth);
-
             float height = labelStyle.CalcHeight(content, width);
 
             Rect position = new Rect(
@@ -91,6 +75,24 @@ namespace ConditionHUD
 
             GUI.Label(new Rect(position.x + 2, position.y + 2, width, height), displayMessage, shadowStyle);
             GUI.Label(position, displayMessage, labelStyle);
+        }
+
+        private void InitStyles()
+        {
+            if (labelStyle != null) return;
+
+            labelStyle = new GUIStyle(GUI.skin.label)
+            {
+                fontStyle = FontStyle.Bold,
+                alignment = TextAnchor.LowerLeft,
+                wordWrap = true,
+                fontSize = fontSize
+            };
+
+            labelStyle.normal.textColor = new Color(1f, 1f, 1f, fontOpacity);
+
+            shadowStyle = new GUIStyle(labelStyle);
+            shadowStyle.normal.textColor = new Color(0f, 0f, 0f, fontOpacity);
         }
 
     }

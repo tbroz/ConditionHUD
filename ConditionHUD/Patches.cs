@@ -60,7 +60,11 @@ namespace ConditionHUD
             if (activePickup == null || !activePickup.gameObject.activeInHierarchy)
             {
                 Plugin.currentHeldItem = null;
+
+                #if DEBUG
                 Plugin.Logger.LogInfo("[InventoryHelpers] Stack cleared (No active item).");
+                #endif
+
                 return;
             }
 
@@ -69,7 +73,10 @@ namespace ConditionHUD
             {
                 CurrentHandStack.Add(activePickup);
                 Plugin.currentHeldItem = activePickup;
+
+                #if DEBUG
                 Plugin.Logger.LogInfo($"[InventoryHelpers] Single held item: '{activePickup.name}' (Parent is world root or unparented)");
+                #endif
                 return;
             }
 
@@ -88,9 +95,11 @@ namespace ConditionHUD
             }
 
             Plugin.currentHeldItem = activePickup;
-            Plugin.Logger.LogInfo($"[InventoryHelpers] Refreshed Hand Stack! Socket: '{handParent.name}' | Count: {CurrentHandStack.Count} | Active Item: '{activePickup.name}'");
-        }
 
+            #if DEBUG
+            Plugin.Logger.LogInfo($"[InventoryHelpers] Refreshed Hand Stack! Socket: '{handParent.name}' | Count: {CurrentHandStack.Count} | Active Item: '{activePickup.name}'");
+            #endif
+        }
     }
 
     [HarmonyPatch(typeof(InteractionObjectPickup), nameof(InteractionObjectPickup.PickUp))]
@@ -104,7 +113,6 @@ namespace ConditionHUD
                 InventoryHelpers.RefreshHandStack(__instance);
             }
         }
-
     }
 
     [HarmonyPatch(typeof(InteractionObjectPickup), nameof(InteractionObjectPickup.RefreshHeldParticles))]
@@ -113,7 +121,9 @@ namespace ConditionHUD
         // used when switching between items in hand
         static void Postfix(InteractionObjectPickup __instance)
         {
+            #if DEBUG
             Plugin.Logger.LogWarning($"===> [RefreshHeldParticles] Fired for: '{__instance?.name}' (Active: {__instance?.gameObject.activeInHierarchy})");
+            #endif
 
             if (__instance != null && __instance.gameObject.activeInHierarchy)
             {
