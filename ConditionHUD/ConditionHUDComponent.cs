@@ -60,10 +60,10 @@ namespace ConditionHUD
 
             float marginX = 30f;
             float MarginY = 30f;
-            float maxWidth = 700f;
+            float maxWidth = 480f;
 
             GUIContent content = new GUIContent(displayMessage);
-            float width = Mathf.Min(labelStyle.CalcSize(content).x + 10f, maxWidth);
+            float width = maxWidth;
             float height = labelStyle.CalcHeight(content, width);
 
             Rect position = new Rect(
